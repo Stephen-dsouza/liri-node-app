@@ -45,6 +45,13 @@ function spotifyTrack() {
             "\nAlbum : " +
             albumName + "\n********************************";
         console.log(output);
+
+        fs.appendFile("log.txt", output, function(err) {
+            if (err) {
+              console.log("Cound not log results.Did you follow the steps in README.md?");
+            }
+            console.log("Search logged");
+          });
     });
 }
 
@@ -71,6 +78,12 @@ function concerts() {
                             date +
                             "\n********************************";
                         console.log(output);
+                        fs.appendFile("log.txt", output, function(err) {
+                            if (err) {
+                              console.log("Cound not log results.Did you follow the steps in README.md?");
+                            }
+                            console.log("Search logged");
+                          });
                     }
                     
                 })
@@ -109,22 +122,30 @@ function movies() {
                 function (response) {
             console.log(response.data);
                     // for (var x = 0; x < response.data.length; x++) {
-                        var rottenRating=[];
+                        var rottenRating ="";
                         var title = response.data.Title;
                         var year = response.data.Year;
-                        var imdbRating =response.data.Ratings.filter(function(imdbRating){
-                             return(imdb)
+                        var imdbValue =response.data.Ratings.filter(function(imdbValue){
+                             return(imdbValue.Source=== "Internet Movie Database")
                         });
-                        // for(var x=0; x<response.data.Ratings.length;x++){
-                        //    if(response.data.Ratings[x].source=='Internet Movie Database'){
-                        //        imdbRating.push(response.data.Ratings[x].Value);
-                        //     }
-                        //     else if(response.data.Ratings[x].source=='Rotten Tomatoes'){
-                        //         rottenRating.push(response.data.Ratings[x].Value);
-                        //      }
-                        //    }
-                        console.log(rottenRating);
-
+                        //get the array from response.data .sources,pass this onto a function to filter
+                        
+                        var rottenValue=response.data.Ratings.filter(function(rottenValue){
+                            //and create a new array rottenRatings based on response.data.Ratings.Source has value Rotten Tomatoes
+                            return(rottenValue.Source=== "Rotten Tomatoes")
+                            
+                       });
+                       console.log(rottenValue.length);
+                       if(rottenValue.length === 0){
+                        rottenRating="NO Ratings";
+                    }
+                    else{
+                        rottenRating= rottenValue[0].Value; 
+                    }
+                    
+                       var language = response.data.Language;
+                       var plot = response.data.Plot;
+                       var actors = response.data.Actors;
                         var output =
                             "\n********************************" +
                             "\nTitle: " +
@@ -132,12 +153,24 @@ function movies() {
                             "\nYear: " +
                             year +
                             "\nIMDB Rating: " +
-                            imdbRating +
+                            imdbValue[0].Value +
                             "\nRotten Tomato Rating: " +
                             rottenRating +
+                            "\nLanguage: " +
+                            language +
+                            "\nMovie Plot: " +
+                            plot
+                            +
+                            "\nActors: " +
+                            actors +
                             "\n********************************";
                         console.log(output);
-                    // }
+                        fs.appendFile("log.txt", output, function(err) {
+                            if (err) {
+                              console.log("Cound not log results.Did you follow the steps in README.md?");
+                            }
+                            console.log("Search logged");
+                          });
                     
                 })
             .catch(function (error) {
@@ -160,6 +193,7 @@ function movies() {
                 }
                 console.log(error.config);
             });
+            
 
     }
 
