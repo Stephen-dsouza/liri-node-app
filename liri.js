@@ -105,24 +105,38 @@ function movies() {
     } else {
         optionsString
     }
-        axios.get("http://img.omdbapi.com/?apikey=c8c4f132&t=" +optionsString).then(
+        axios.get("http://www.omdbapi.com/?apikey=c8c4f132&t=" +optionsString).then(
                 function (response) {
-console.log(response);
+            console.log(response.data);
                     // for (var x = 0; x < response.data.length; x++) {
+                        var rottenRating=[];
+                        var title = response.data.Title;
+                        var year = response.data.Year;
+                        var imdbRating =response.data.Ratings.filter(function(imdbRating){
+                             return(imdb)
+                        });
+                        // for(var x=0; x<response.data.Ratings.length;x++){
+                        //    if(response.data.Ratings[x].source=='Internet Movie Database'){
+                        //        imdbRating.push(response.data.Ratings[x].Value);
+                        //     }
+                        //     else if(response.data.Ratings[x].source=='Rotten Tomatoes'){
+                        //         rottenRating.push(response.data.Ratings[x].Value);
+                        //      }
+                        //    }
+                        console.log(rottenRating);
 
-                    //     var venue = response.data[x].venue.name;
-                    //     var venueLocation = response.data[x].venue.city + " , " + response.data[x].venue.country;
-                    //     var date = moment(response.data[x].datetime).format("DD/MM/YYYY");
-                    //     var output =
-                    //         "\n********************************" +
-                    //         "\nEvent Venue: " +
-                    //         venue +
-                    //         "\nLocation of Event: " +
-                    //         venueLocation +
-                    //         "\nDate of Event : " +
-                    //         date +
-                    //         "\n********************************";
-                    //     console.log(output);
+                        var output =
+                            "\n********************************" +
+                            "\nTitle: " +
+                            title +
+                            "\nYear: " +
+                            year +
+                            "\nIMDB Rating: " +
+                            imdbRating +
+                            "\nRotten Tomato Rating: " +
+                            rottenRating +
+                            "\n********************************";
+                        console.log(output);
                     // }
                     
                 })
