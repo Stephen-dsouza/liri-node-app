@@ -120,8 +120,6 @@ function movies() {
     }
         axios.get("http://www.omdbapi.com/?apikey=c8c4f132&t=" +optionsString).then(
                 function (response) {
-            console.log(response.data);
-                    // for (var x = 0; x < response.data.length; x++) {
                         var rottenRating ="";
                         var title = response.data.Title;
                         var year = response.data.Year;
@@ -135,7 +133,6 @@ function movies() {
                             return(rottenValue.Source=== "Rotten Tomatoes")
                             
                        });
-                       console.log(rottenValue.length);
                        if(rottenValue.length === 0){
                         rottenRating="NO Ratings";
                     }

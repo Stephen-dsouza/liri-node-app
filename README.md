@@ -2,9 +2,33 @@
  * LIRI will search Spotify for songs, Bands in Town for concerts, and OMDB for movies.
  1. This bot solves the option of searchong for  a track from Spotify or search for events or a movie all in one place
 
-2. Give a high-level overview of how the app is organized
-3. Give start-to-finish instructions on how to run the app
-4. Include screenshots, gifs or videos of the app functioning
-5. Contain a link to a deployed version of the app
-6. Clearly list the technologies used in the app
-7. State your role in the app development
+2. High-level overview 
+    * this app makes use of OMDB for movie search, Spotify for track search and bandsintown-api for artist search
+    * based on your search input, the relavant details will be displayed
+3. Instructions to run the app
+    ## For song search
+    
+        * type 'node liri.js' followed by 'concert-this' followed by your artist search
+        * example 'node liri.js spotify-this-song shallow'' will result in 
+     
+    ![Song Search](./images/spotifyimage.JPG)
+
+        * if no artist is specified, default track will be 'Ace of Base'
+    ![Song Search](./images/spotifyimage1.JPG)
+    
+
+    ## For event search
+   
+        * type 'node liri.js' followed by 'concert-this' followed by the artist you want to search.
+        * example 'node liri.js concert-this guy sebastian' will result in 
+    ![artist Search](./images/concertimage.JPG)
+    
+    ## For movie search
+    
+        * type 'node liri.js' followed by 'movie-this' followed by the artist you want to search.
+        * example 'node liri.js movie-this matrix' will result in 
+    ![movie Search](./images/movieimage.JPG)
+         * if no artist is specified, default track will be 'Ace of Base'
+    ![movie Search](./images/movieimage1.JPG)
+    
+
