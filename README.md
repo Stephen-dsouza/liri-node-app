@@ -31,4 +31,9 @@
          * if no artist is specified, default track will be 'Ace of Base'
     ![movie Search](./images/movieimage1.JPG)
     
-
+    ## 4th option of search
+    
+        * type 'node liri.js' followed by 'do-what-it-says'
+        * example 'node liri.js do-what-it-says' will result in 
+    ![magic Search](./images/movieimage111.JPG)
+         

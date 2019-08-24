@@ -1,24 +1,24 @@
 require("dotenv").config();
-
 var keys = require("./keys.js");
-
 var Spotify = require('node-spotify-api');
 var axios = require("axios");
 //get the keys for the API from keys.js
 var spotify = new Spotify(keys.spotify);
 var moment = require("moment");
 var fs = require("fs");
-// moment().format();
+//get the value of search function to be performed
 var options = process.argv[2];
+//get the artist/track/movie the search to be performed on
 var optionsString = process.argv.slice(3).join(" ");
 
 
 
-function spotifyTrack() {
-    if (optionsString === "") {
+function spotifyTrack(search) {
+    console.log(search);
+    if (search === "") {
         optionsString = "ace of base"
     } else {
-        optionsString
+        search
     }
 
     spotify.search({
@@ -46,12 +46,12 @@ function spotifyTrack() {
             albumName + "\n********************************";
         console.log(output);
 
-        fs.appendFile("log.txt", output, function(err) {
+        fs.appendFile("log.txt", output, function (err) {
             if (err) {
-              console.log("Cound not log results.Did you follow the steps in README.md?");
+                console.log("Cound not log results.Did you follow the steps in README.md?");
             }
             console.log("Search logged");
-          });
+        });
     });
 }
 
@@ -78,14 +78,14 @@ function concerts() {
                             date +
                             "\n********************************";
                         console.log(output);
-                        fs.appendFile("log.txt", output, function(err) {
+                        fs.appendFile("log.txt", output, function (err) {
                             if (err) {
-                              console.log("Cound not log results.Did you follow the steps in README.md?");
+                                console.log("Cound not log results.Did you follow the steps in README.md?");
                             }
                             console.log("Search logged");
-                          });
+                        });
                     }
-                    
+
                 })
             .catch(function (error) {
                 if (error.response) {
@@ -118,92 +118,100 @@ function movies() {
     } else {
         optionsString
     }
-        axios.get("http://www.omdbapi.com/?apikey=c8c4f132&t=" +optionsString).then(
-                function (response) {
-                        var rottenRating ="";
-                        var title = response.data.Title;
-                        var year = response.data.Year;
-                        var imdbValue =response.data.Ratings.filter(function(imdbValue){
-                             return(imdbValue.Source=== "Internet Movie Database")
-                        });
-                        //get the array from response.data .sources,pass this onto a function to filter
-                        
-                        var rottenValue=response.data.Ratings.filter(function(rottenValue){
-                            //and create a new array rottenRatings based on response.data.Ratings.Source has value Rotten Tomatoes
-                            return(rottenValue.Source=== "Rotten Tomatoes")
-                            
-                       });
-                       if(rottenValue.length === 0){
-                        rottenRating="NO Ratings";
-                    }
-                    else{
-                        rottenRating= rottenValue[0].Value; 
-                    }
-                    
-                       var language = response.data.Language;
-                       var plot = response.data.Plot;
-                       var actors = response.data.Actors;
-                        var output =
-                            "\n********************************" +
-                            "\nTitle: " +
-                            title +
-                            "\nYear: " +
-                            year +
-                            "\nIMDB Rating: " +
-                            imdbValue[0].Value +
-                            "\nRotten Tomato Rating: " +
-                            rottenRating +
-                            "\nLanguage: " +
-                            language +
-                            "\nMovie Plot: " +
-                            plot
-                            +
-                            "\nActors: " +
-                            actors +
-                            "\n********************************";
-                        console.log(output);
-                        fs.appendFile("log.txt", output, function(err) {
-                            if (err) {
-                              console.log("Cound not log results.Did you follow the steps in README.md?");
-                            }
-                            console.log("Search logged");
-                          });
-                    
-                })
-            .catch(function (error) {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log("---------------Data---------------");
-                    console.log(error.response.data);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.status);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an object that comes back with details pertaining to the error that occurred.
-                    console.log(error.request);
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.log("Error", error.message);
-                }
-                console.log(error.config);
-            });
-            
+    axios.get("http://www.omdbapi.com/?apikey=c8c4f132&t=" + optionsString).then(
+            function (response) {
+                var rottenRating = "";
+                var title = response.data.Title;
+                var year = response.data.Year;
+                var imdbValue = response.data.Ratings.filter(function (imdbValue) {
+                    return (imdbValue.Source === "Internet Movie Database")
+                });
+                //get the array from response.data .sources,pass this onto a function to filter
 
-    }
+                var rottenValue = response.data.Ratings.filter(function (rottenValue) {
+                    //and create a new array rottenRatings based on response.data.Ratings.Source has value Rotten Tomatoes
+                    return (rottenValue.Source === "Rotten Tomatoes")
+
+                });
+                if (rottenValue.length === 0) {
+                    rottenRating = "NO Ratings";
+                } else {
+                    rottenRating = rottenValue[0].Value;
+                }
+
+                var language = response.data.Language;
+                var plot = response.data.Plot;
+                var actors = response.data.Actors;
+                var output =
+                    "\n********************************" +
+                    "\nTitle: " +
+                    title +
+                    "\nYear: " +
+                    year +
+                    "\nIMDB Rating: " +
+                    imdbValue[0].Value +
+                    "\nRotten Tomato Rating: " +
+                    rottenRating +
+                    "\nLanguage: " +
+                    language +
+                    "\nMovie Plot: " +
+                    plot +
+                    "\nActors: " +
+                    actors +
+                    "\n********************************";
+                console.log(output);
+                fs.appendFile("log.txt", output, function (err) {
+                    if (err) {
+                        console.log("Cound not log results.Did you follow the steps in README.md?");
+                    }
+                    console.log("Search logged");
+                });
+
+            })
+        .catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log("---------------Data---------------");
+                console.log(error.response.data);
+                console.log("---------------Status---------------");
+                console.log(error.response.status);
+                console.log("---------------Status---------------");
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
+
+
+}
 
 switch (options) {
     case "spotify-this-song":
-        spotifyTrack();
+        spotifyTrack(optionsString);
         break;
     case "concert-this":
         concerts();
         break;
-        case "movie-this":
-            movies();
-            break;
+    case "movie-this":
+        movies();
+        break;
+    case "do-what-it-says":
+        fs.readFile("./random.txt", "utf-8", function (err, data) {
+            if (err) {
+                console.log("READ THE README FILE");
+            }
 
-        
+            optionsString = data.substring(data.indexOf(",") + 2, data.length - 1).toString();
+        })
+        spotifyTrack(optionsString);
+        break;
+
+
 }
