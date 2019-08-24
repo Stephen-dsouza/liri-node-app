@@ -13,17 +13,12 @@ var optionsString = process.argv.slice(3).join(" ");
 
 
 
-function spotifyTrack(search) {
-    console.log(search);
-    if (search === "") {
-        optionsString = "ace of base"
-    } else {
-        search
-    }
-
+function spotifyTrack(searching) {
+    // console.log(search);
+    
     spotify.search({
         type: 'track',
-        query: optionsString
+        query: searching
     }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
@@ -194,6 +189,12 @@ function movies() {
 
 switch (options) {
     case "spotify-this-song":
+            if (optionsString === "") {
+                optionsString = "ace of base"
+            } else {
+                optionsString
+            }
+        
         spotifyTrack(optionsString);
         break;
     case "concert-this":
@@ -207,10 +208,10 @@ switch (options) {
             if (err) {
                 console.log("READ THE README FILE");
             }
-
-            optionsString = data.substring(data.indexOf(",") + 2, data.length - 1).toString();
+            
+            var searchString = (data.substring(data.indexOf(",") + 2, data.length - 1).toString());
+            spotifyTrack(searchString);
         })
-        spotifyTrack(optionsString);
         break;
 
 

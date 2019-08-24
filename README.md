@@ -35,5 +35,8 @@
     
         * type 'node liri.js' followed by 'do-what-it-says'
         * example 'node liri.js do-what-it-says' will result in 
-    ![magic Search](./images/movieimage111.JPG)
+    ![magic Search](./images/dowhatitsaysimage.JPG)
+    
+        * How does this work? - This is for you to find out.(HINT: check random.txt)
+
          
