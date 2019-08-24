@@ -12,14 +12,7 @@ var fs = require("fs");
 var options = process.argv[2];
 var optionsString = process.argv.slice(3).join(" ");
 
-switch (options) {
-    case "spotify-this-song":
-        spotifyTrack();
-        break;
-    case "concert-this":
-        concerts();
-        break;
-}
+
 
 function spotifyTrack() {
     if (optionsString === "") {
@@ -103,4 +96,69 @@ function concerts() {
             });
 
     }
+}
+
+
+function movies() {
+    if (optionsString === "") {
+        optionsString = "Mr. Nobody"
+    } else {
+        optionsString
+    }
+        axios.get("http://img.omdbapi.com/?apikey=c8c4f132&t=" +optionsString).then(
+                function (response) {
+console.log(response);
+                    // for (var x = 0; x < response.data.length; x++) {
+
+                    //     var venue = response.data[x].venue.name;
+                    //     var venueLocation = response.data[x].venue.city + " , " + response.data[x].venue.country;
+                    //     var date = moment(response.data[x].datetime).format("DD/MM/YYYY");
+                    //     var output =
+                    //         "\n********************************" +
+                    //         "\nEvent Venue: " +
+                    //         venue +
+                    //         "\nLocation of Event: " +
+                    //         venueLocation +
+                    //         "\nDate of Event : " +
+                    //         date +
+                    //         "\n********************************";
+                    //     console.log(output);
+                    // }
+                    
+                })
+            .catch(function (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log("---------------Data---------------");
+                    console.log(error.response.data);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.status);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log("Error", error.message);
+                }
+                console.log(error.config);
+            });
+
+    }
+
+switch (options) {
+    case "spotify-this-song":
+        spotifyTrack();
+        break;
+    case "concert-this":
+        concerts();
+        break;
+        case "movie-this":
+            movies();
+            break;
+
+        
 }
